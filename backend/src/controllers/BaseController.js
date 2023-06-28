@@ -12,25 +12,25 @@ class BaseController {
   getAll() {
     this.model
       .getAll()
-      .then((result) => {
+      .then(([result]) => {
         this.res.status(200).json(result);
       })
-      .catch((error) => this.res.sendJsonError(error));
+      .catch((error) => this.res.send(error));
   }
 
   getOne() {
     this.model
       .getOne(this.req.params)
-      .then((result) => {
+      .then(([result]) => {
         this.res.status(200).json(result);
       })
-      .catch((error) => this.res.sendJsonError(error));
+      .catch((error) => this.res.send(error));
   }
 
   create() {
     this.model
       .create(this.req.body)
-      .then((result) => {
+      .then(([result]) => {
         this.res
           .status(201)
           .location(`${this.req.baseUrl}/${this.table}/${result.insertId}`)
@@ -40,19 +40,19 @@ class BaseController {
             username: result.username,
           });
       })
-      .catch((error) => this.res.sendJsonError(error));
+      .catch((error) => this.res.send(error));
   }
 
   update() {
     this.model
       .update(this.req.body, this.req.params)
-      .then((result) => {
+      .then(([result]) => {
         this.res
           .status(200)
           .location(`${this.req.baseUrl}/${this.table}/${this.req.params.id}`)
           .json({ message: 'Updated successfully' });
       })
-      .catch((error) => this.res.sendJsonError(error));
+      .catch((error) => this.res.send(error));
   }
 
   delete() {

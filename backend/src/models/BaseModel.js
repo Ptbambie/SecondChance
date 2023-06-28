@@ -16,9 +16,10 @@ class BaseModel {
   getOne(params) {
     const paramsKeys = Object.keys(params);
     const paramsValues = Object.values(params);
-    return this.db.query(`SELECT * FROM ${this.table} WHERE ${paramsKeys} ?`, [
-      paramsValues,
-    ]);
+    return this.db.query(
+      `SELECT * FROM ${this.table} WHERE ${paramsKeys} = ?`,
+      [paramsValues]
+    );
   }
 
   create(data) {

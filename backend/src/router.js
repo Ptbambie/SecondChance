@@ -12,6 +12,22 @@ const {
 
 const router = express.Router();
 
+router.get('/users', (req, res, next) =>
+  new UserController(req, res, next).getAll()
+);
+
+router.get('/users/:id', (req, res, next) =>
+  new UserController(req, res, next).getOne()
+);
+
+router.get('/admins', (req, res, next) =>
+  new AdminController(req, res, next).getAll()
+);
+
+router.get('/admins/:id', (req, res, next) =>
+  new AdminController(req, res, next).getOne()
+);
+
 router.get('/items', (req, res, next) =>
   new ItemController(req, res, next).getAll()
 );
