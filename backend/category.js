@@ -1,5 +1,5 @@
-const getCategory = (req, res, next) => {
-  const { ram, stockage, camera } = req.body;
+const getCategory = () => {
+  const { ram, stockage, camera } = this.req.body;
 
   if (!ram || !memory || !stockage || !camera) {
     return res.status(400).json({ message: 'Please specify all fields' });
@@ -34,3 +34,5 @@ const getCategory = (req, res, next) => {
 
   const valTotal = valA + valB + valC;
 };
+
+module.exports = getCategory;
