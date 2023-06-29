@@ -2,11 +2,11 @@
 
 :root {
   --maint-font: 'Poppins', 'sans-serif';
-  --dark-color: #000000;
+  --darkest-color: #000000;
   --light-color: #ebebeb;
   --main-color: #00acb0;
   --second-color: #e62460;
-  --font-color: #002743;
+  --dark-color: #002743;
 }
 
 * {
@@ -15,6 +15,16 @@
   box-sizing: border-box;
 }
 
-h1 {
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   font-family: var(--maint-font);
+  background-color: var(--light-color);
+}
+
+#root,
+.app {
+  width: 100%;
+  height: 100%;
 }
