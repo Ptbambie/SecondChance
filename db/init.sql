@@ -105,6 +105,9 @@ CREATE TABLE IF NOT EXISTS `second_chance`.`user` (
   `firstname` VARCHAR(90) NOT NULL,
   `lastname` VARCHAR(90) NOT NULL,
   `zipcode` INT NOT NULL,
+  `username` VARCHAR(90) NOT NULL,
+  `email` VARCHAR(90) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`id`, `role_id`),
   INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
@@ -115,6 +118,11 @@ CREATE TABLE IF NOT EXISTS `second_chance`.`user` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+USE `second_chance` ;
+
+INSERT INTO `role` (name) VALUES ('admin'), ('user');
+INSERT INTO `state` (name) VALUES ('DEEE'), ('réparable'), ('bloqué'), ('reconditionnable'), ('reconditionné');
+INSERT INTO `category` (name) VALUES ('smartphone'), ('tablette'), ('ordinateur'), ('accessoire');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
