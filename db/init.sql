@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS `second_chance`.`item` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(90) NOT NULL,
   `ram` INT NOT NULL,
-  `memory` INT NOT NULL,
   `screen` INT NOT NULL,
   `network` VARCHAR(45) NULL,
   `stockage` INT NOT NULL,
@@ -79,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `second_chance`.`item` (
   `battery` INT NOT NULL,
   `charger` TINYINT NOT NULL,
   `disponibility` TINYINT NOT NULL,
+  `price` INT NOT NULL,
   `category_id` INT NOT NULL,
   `state_id` INT NOT NULL,
   PRIMARY KEY (`id`, `category_id`, `state_id`),
@@ -122,7 +122,7 @@ USE `second_chance` ;
 
 INSERT INTO `role` (name) VALUES ('admin'), ('user');
 INSERT INTO `state` (name) VALUES ('DEEE'), ('réparable'), ('bloqué'), ('reconditionnable'), ('reconditionné');
-INSERT INTO `category` (name) VALUES ('smartphone'), ('tablette'), ('ordinateur'), ('accessoire');
+INSERT INTO `category` (name) VALUES ('1-HC'), ('2-C'), ('3-B'), ('4-A'), ('5-Premium');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

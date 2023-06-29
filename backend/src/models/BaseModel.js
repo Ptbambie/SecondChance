@@ -29,6 +29,7 @@ class BaseModel {
     const fillValues = dataValues
       .map((value) => (typeof value === 'string' ? `'${value}'` : value))
       .join(', ');
+
     return this.db.query(
       `INSERT INTO ${this.table} (${fillKeys}) VALUES (${fillValues})`,
       [dataValues]
