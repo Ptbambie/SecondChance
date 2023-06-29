@@ -1,0 +1,4 @@
+.app h1 {
+  font-weight: 600;
+  color: var(--font-color);
+}
