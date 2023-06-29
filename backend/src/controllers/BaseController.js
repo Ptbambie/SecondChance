@@ -13,7 +13,17 @@ class BaseController {
     this.model
       .getAll()
       .then(([result]) => {
-        this.res.status(200).json(result);
+        if (result.length === 0) {
+          return this.res.status(404).json({ message: 'Not found' });
+        } else {
+          const securedResult = result.map((row) => {
+            if (row.password) {
+              delete row.password;
+            }
+            return row;
+          });
+          this.res.status(200).json(securedResult);
+        }
       })
       .catch((error) => this.res.send(error));
   }
@@ -22,7 +32,17 @@ class BaseController {
     this.model
       .getOne(this.req.params)
       .then(([result]) => {
-        this.res.status(200).json(result);
+        if (result.length === 0) {
+          return this.res.status(404).json({ message: 'Not found' });
+        } else {
+          const securedResult = result.map((row) => {
+            if (row.password) {
+              delete row.password;
+            }
+            return row;
+          });
+          this.res.status(200).json(securedResult);
+        }
       })
       .catch((error) => this.res.send(error));
   }

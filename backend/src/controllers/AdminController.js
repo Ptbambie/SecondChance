@@ -47,98 +47,97 @@ class AdminController extends BaseController {
     }
   }
 
-  async login(req, res) {
-    const { username, password } = req.body;
+  login = () => {
+    const { email, password } = this.req.body;
 
-    if (!username || !password) {
-      return res
+    if (!email || !password) {
+      return this.res
         .status(400)
-        .json({ message: 'Please specify both email and password' });
+        .json({ error: 'Please specify both email and password' });
     }
 
-    try {
-      const [admin] = await this.model.getOne(email);
-      if (!admin) {
-        return res.status(400).json({ message: 'Incorrect username' });
-      }
+    const adminEmail = { email };
 
-      const isPasswordCorrect = await argon2.verify(admin.password, password);
+    this.model
+      .getOne(adminEmail)
+      .then(async ([rows]) => {
+        if (rows[0] == null) {
+          this.res.status(401).json({ error: 'Invalid email' });
+        } else {
+          const { id, email, password: hashedPassword, role_id } = rows[0];
 
-      if (!isPasswordCorrect) {
-        return res.status(400).json({ message: 'Incorrect password' });
-      }
-
-      const payload = { id: admin.id, role: admin.role_id };
-
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: '1h',
+          if (!(await argon2.verify(hashedPassword, password))) {
+            this.res.status(401).json({ error: 'Invalid password' });
+          } else {
+            const payload = { id: id, role: role_id };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+              expiresIn: '1h',
+            });
+            this.res
+              .cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+              })
+              .status(200)
+              .json({ id, email, role_id });
+          }
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        this.res.status(500).send({
+          error: err.message,
+        });
       });
+  };
 
-      res
-        .cookie('token', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-        })
-        .status(200)
-        .json({ id, role_id });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: error.message });
-    }
-  }
+  // async login() {
+  //   const { email, password } = this.req.body;
 
-  async createUser(req, res) {
-    const { firstname, lastname, zipcode, username, email, password, role_id } =
-      req.body;
+  //   if (!email || !password) {
+  //     return this.res
+  //       .status(400)
+  //       .json({ message: 'Please specify both email and password' });
+  //   }
 
-    try {
-      if (
-        !firstname ||
-        !lastname ||
-        !zipcode ||
-        !username ||
-        !email ||
-        !password ||
-        !role_id
-      ) {
-        return res.status(400).json({ message: 'Please specify all fields' });
-      }
+  //   const adminEmail = { email };
 
-      const hashedPassword = await argon2.hash(password, {
-        type: argon2.argon2id,
-        memoryCost: 2 ** 16,
-        timeCost: 4,
-        parallelism: 2,
-        hashLength: 50,
-      });
+  //   try {
+  //     const [admin] = await this.model.getOne(adminEmail);
+  //     if (!admin) {
+  //       return this.res.status(400).json({ message: 'Invalid email' });
+  //     } else {
+  //       const { email, password: hashedPassword } = admin;
+  //       console.log('----------', admin);
 
-      const userData = {
-        firstname,
-        lastname,
-        zipcode,
-        username: firstname.slice(0, 1) + lastname + zipcode,
-        email,
-        password: hashedPassword,
-        role_id: 2,
-      };
+  //       const isPasswordCorrect = await argon2.verify(hashedPassword, password);
 
-      console.log(userData);
+  //       if (!isPasswordCorrect) {
+  //         return this.res.status(400).json({ message: 'Incorrect password' });
+  //       }
 
-      const [result] = await this.model.create(userData);
+  //       const payload = { id: admin.id, role: admin.role_id };
 
-      res.status(200).json({
-        message: 'User registered successfully',
-        id: result.insertId,
-        ...userData,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: error.message });
-    }
-  }
+  //       const token = jwt.sign(payload, process.env.JWT_SECRET, {
+  //         expiresIn: '1h',
+  //       });
 
-  logout(req, res) {
-    res.clearCookie('token').status(200).json({ message: 'Logged out' });
+  //       this.res
+  //         .cookie('token', token, {
+  //           httpOnly: true,
+  //           secure: process.env.NODE_ENV === 'production',
+  //         })
+  //         .status(200)
+  //         .json({ id, role_id });
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     this.res.status(500).json({ message: error.message });
+  //   }
+  // }
+
+  logout() {
+    this.res.clearCookie('token').status(200).json({ message: 'Logged out' });
   }
 }
 

@@ -37,7 +37,7 @@ router.get('/items/:id', (req, res, next) =>
 router.get('/states', (req, res, next) =>
   new StateController(req, res, next).getAll()
 );
-router.get('categories', (req, res, next) =>
+router.get('/categories', (req, res, next) =>
   new CategoryController(req, res, next).getAll()
 );
 
@@ -45,7 +45,7 @@ router.post('/items', authorization, (req, res, next) =>
   new ItemController(req, res, next).create()
 );
 router.post('/users', authorization, isAdmin, (req, res, next) =>
-  new UserController(req, res, next).create()
+  new UserController(req, res, next).createUser()
 );
 router.post('/login-admin', (req, res, next) =>
   new AdminController(req, res, next).login()
