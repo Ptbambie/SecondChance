@@ -44,23 +44,23 @@ class UserController extends BaseController {
   }
 
   login = () => {
-    const { email, password } = this.req.body;
+    const { username, password } = this.req.body;
 
-    if (!email || !password) {
+    if (!username || !password) {
       return this.res
         .status(400)
         .json({ error: 'Please specify both email and password' });
     }
 
-    const userEmail = { email };
+    const identifiant = { username };
 
     this.model
-      .getOne(userEmail)
+      .getOne(identifiant)
       .then(async ([rows]) => {
         if (rows[0] == null) {
           this.res.status(401).json({ error: 'Invalid email' });
         } else {
-          const { id, email, password: hashedPassword, role_id } = rows[0];
+          const { id, username, password: hashedPassword, role_id } = rows[0];
 
           if (!(await argon2.verify(hashedPassword, password))) {
             this.res.status(401).json({ error: 'Invalid password' });
@@ -75,7 +75,7 @@ class UserController extends BaseController {
                 secure: process.env.NODE_ENV === 'production',
               })
               .status(200)
-              .json({ id, email, role_id });
+              .json({ id, username, role_id });
           }
         }
       })
