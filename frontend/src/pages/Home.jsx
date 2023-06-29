@@ -5,7 +5,6 @@ import './home.css';
 import Login from '../components/login/Login';
 
 const Home = () => {
-  const navigate = useNavigate();
   const [loginPage, setLoginPage] = useState(false);
 
   const handleSubmit = (e) => {
