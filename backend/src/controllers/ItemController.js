@@ -1,5 +1,5 @@
 const BaseController = require('./BaseController');
-const { ItemModel } = require('../models');
+const { ItemModel, CategoryModel, StateModel } = require('../models');
 
 class ItemController extends BaseController {
   constructor(req, res) {
@@ -24,6 +24,12 @@ class ItemController extends BaseController {
     } = this.req.body;
 
     try {
+      const [categories] = await CategoryModel.getAllCategories();
+
+      console.log(categories);
+
+      const [states] = await StateModel.getAllStates();
+
       if (
         !name ||
         !ram ||
