@@ -28,3 +28,13 @@ body {
   width: 100%;
   height: 100%;
 }
+
+a {
+  text-decoration: none;
+  color: var(--dark-color);
+  font-family: var(--maint-font);
+}
+
+ul {
+  list-style: none;
+}

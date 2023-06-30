@@ -121,10 +121,13 @@ class UserController extends BaseController {
 
       const [result] = await this.model.create(userData);
 
+      console.log(result);
+
       this.res.status(200).json({
         message: 'User registered successfully',
         id: result.insertId,
-        ...userData,
+        username: userData.username,
+        role_id: userData.role_id,
       });
     } catch (error) {
       console.error(error);
@@ -132,8 +135,11 @@ class UserController extends BaseController {
     }
   }
 
-  logout(req, res) {
-    res.clearCookie('token').status(200).json({ message: 'Logout successful' });
+  logout() {
+    this.res
+      .clearCookie('token')
+      .status(200)
+      .json({ message: 'Logout successful' });
   }
 }
 

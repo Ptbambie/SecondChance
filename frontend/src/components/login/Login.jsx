@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { IoCloseSharp } from 'react-icons/io5';
-import './login.css';
 import { useNavigate } from 'react-router-dom';
+import './login.css';
 
 const Login = ({ handleClick }) => {
-  //   const url = import.meta.env.VITE_BACKEND_URL;
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,6 +19,7 @@ const Login = ({ handleClick }) => {
   };
 
   const handleSubmit = (event) => {
+    const url = process.env.REACT_APP_BACKEND_URL;
     event.preventDefault();
     if (
       event.target.username.value === '' ||
@@ -30,7 +29,7 @@ const Login = ({ handleClick }) => {
     } else {
       axios
         .post(
-          `http://localhost:5001/api/login`,
+          `${url}/api/login`,
           {
             username: event.target.username.value,
             password: event.target.password.value,

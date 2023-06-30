@@ -81,8 +81,8 @@ class BaseController {
     });
   }
 
-  sendJson(status, data) {
-    this.res.status(status).json(data);
+  sendJson(data) {
+    this.res.status(200).json(data);
   }
 }
 
