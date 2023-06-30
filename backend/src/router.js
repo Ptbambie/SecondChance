@@ -8,6 +8,7 @@ const {
   ItemController,
   StateController,
   UserController,
+  BrandController,
 } = require('./controllers');
 
 const router = express.Router();
@@ -39,6 +40,10 @@ router.get('/states', (req, res, next) =>
 );
 router.get('/categories', (req, res, next) =>
   new CategoryController(req, res, next).getAll()
+);
+
+router.get('/brands', (req, res, next) =>
+  new BrandController(req, res, next).getAll()
 );
 
 router.post('/items', authorization, (req, res, next) =>

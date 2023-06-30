@@ -41,17 +41,19 @@ class BaseModel {
     const paramsValues = Object.values(params);
     const dataKeys = Object.keys(data);
     const dataValues = Object.values(data);
+
     const fillData = dataKeys.map((key) => `${key} = ?`).join(', ');
+
     return this.db.query(
-      `UPDATE ${this.table} SET ${fillData} WHERE ${paramsKeys} = ?`,
-      [dataValues, paramsValues]
+      `UPDATE ${this.table} SET ${fillData} WHERE ${paramsKeys} = ${paramsValues}`,
+      [...dataValues]
     );
   }
 
-  detele(params) {
+  delete(params) {
     const paramsKey = Object.keys(params);
     const paramsValue = Object.values(params);
-    return this.db.query(`DELETE FROM ${this.table} WHERE ${paramsKey} ?`, [
+    return this.db.query(`DELETE FROM ${this.table} WHERE ${paramsKey} = ?`, [
       paramsValue,
     ]);
   }

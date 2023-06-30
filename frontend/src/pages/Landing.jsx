@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../components/footer/Footer';
-import './home.css';
+import './landing.css';
 import Login from '../components/login/Login';
 
-const Home = () => {
-  const navigate = useNavigate();
+const Landing = () => {
   const [loginPage, setLoginPage] = useState(false);
 
   const handleSubmit = (e) => {
@@ -18,7 +16,7 @@ const Home = () => {
   };
 
   return (
-    <div className='home'>
+    <div className='landing-page'>
       {loginPage && <Login handleClick={handleClick} />}
       <div className='text-presentation'>
         <h1>
@@ -40,4 +38,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;

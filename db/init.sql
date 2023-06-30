@@ -63,6 +63,15 @@ CREATE TABLE IF NOT EXISTS `second_chance`.`state` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `second_chance`.`brand`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `second_chance`.`brand` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `second_chance`.`item`
@@ -79,11 +88,18 @@ CREATE TABLE IF NOT EXISTS `second_chance`.`item` (
   `charger` TINYINT NOT NULL,
   `disponibility` TINYINT NOT NULL,
   `price` INT NOT NULL,
+  `brand_id` INT NOT NULL,
   `category_id` INT NOT NULL,
   `state_id` INT NOT NULL,
   PRIMARY KEY (`id`, `category_id`, `state_id`),
   INDEX `fk_item_category_idx` (`category_id` ASC) VISIBLE,
   INDEX `fk_item_state1_idx` (`state_id` ASC) VISIBLE,
+  INDEX `fk_item_brand1_idx` (`brand_id` ASC) VISIBLE,
+  CONSTRAINT `fk_item_brand1`
+    FOREIGN KEY (`brand_id`)
+    REFERENCES `second_chance`.`brand` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_item_category`
     FOREIGN KEY (`category_id`)
     REFERENCES `second_chance`.`category` (`id`)
@@ -123,6 +139,7 @@ USE `second_chance` ;
 INSERT INTO `role` (name) VALUES ('admin'), ('user');
 INSERT INTO `state` (name) VALUES ('DEEE'), ('réparable'), ('bloqué'), ('reconditionnable'), ('reconditionné');
 INSERT INTO `category` (name) VALUES ('1-HC'), ('2-C'), ('3-B'), ('4-A'), ('5-Premium');
+INSERT INTO `brand` (name) VALUES ('Apple'), ('Samsung'), ('Huawei'), ('Xiaomi'), ('Sony'), ('LG'), ('Nokia'), ('Motorola'), ('OnePlus'), ('Google'), ('Asus'), ('HTC'), ('BlackBerry'), ('Lenovo'), ('Wiko'), ('Alcatel'), ('ZTE'), ('Oppo'), ('Meizu'), ('Vivo'), ('Realme');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
