@@ -4,6 +4,7 @@
   --maint-font: 'Poppins', 'sans-serif';
   --darkest-color: #000000;
   --light-color: #ebebeb;
+  --background-color: #f9f9f9;
   --main-color: #00acb0;
   --second-color: #e62460;
   --dark-color: #002743;
@@ -20,7 +21,7 @@ body {
   height: 100vh;
   overflow: hidden;
   font-family: var(--maint-font);
-  background-color: var(--light-color);
+  background-color: var(--background-color);
 }
 
 #root,
