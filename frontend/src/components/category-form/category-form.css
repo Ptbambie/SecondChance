@@ -1,5 +1,17 @@
-.dropdown {
+.category-form-container {
+  width: 70%;
+  height: 70%;
+  box-shadow: 0px 0px 60px 0px rgba(71, 74, 182, 0.12);
+  border-radius: 15px;
+  padding: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.form .dropdown {
   width: 25%;
+  min-width: 350px;
   height: 2em;
   margin: 1em;
   border-radius: 8px;
@@ -10,4 +22,42 @@
 
 .dropdown:focus {
   outline: none;
+}
+
+.default-value {
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 5px;
+  border: 1px solid var(--darkest-color);
+}
+
+.default-value li {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.arrow-dropdown {
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.arrow-dropdown:hover {
+  color: var(--second-color);
+}
+
+.brand-list {
+  background-color: white;
+  border-radius: 8px;
+  height: 20dvh;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 1em;
+  position: absolute;
+  z-index: 2;
 }
